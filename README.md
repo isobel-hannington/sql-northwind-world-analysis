@@ -20,7 +20,9 @@
 
 ## 🗂️ Data
 
-Northwind is a sample database for a small food trading company. World is a sample database of countries and cities, with population, surface area, continent, life expectancy and capital city. Both are teaching datasets, and the World figures are old, so the results describe the sample, not the world today.
+Northwind is a sample sales database for a small food trading company, with customers, orders, order details, products, categories, suppliers and employees. World is a sample database of countries and cities, with population, surface area, continent, life expectancy and capital city. Both are teaching datasets, and the World figures are old, so the results describe the sample, not the world today.
+
+I created both databases in my own Supabase project by running Leep Talent's setup scripts in the SQL Editor, then wrote and ran my queries against them. The setup scripts are included in this repository.
 
 ## 🛠️ Approach
 
@@ -130,14 +132,15 @@ Every World query, with its result and screenshot:
 ## 💡 Skills used
 
 **Technical**
-- Filtering with `WHERE`, `IN`, `BETWEEN`, `LIKE` and `IS NOT NULL`
+- Retrieving data with `SELECT`, `SELECT DISTINCT` and column aliases (`AS`)
+- Filtering with `WHERE`, `AND`, `OR`, `IN`, `BETWEEN`, `LIKE` and `IS NOT NULL`
 - Inner joins across up to three tables, including a join on a less obvious key (a country to its capital city)
 - Aggregates with `COUNT`, `SUM` and `AVG`, grouped with `GROUP BY`
 - Sorting and paging with `ORDER BY`, `LIMIT` and `OFFSET`
 - Relational design: primary keys, foreign keys and one-to-many relationships
 
 **Transferable**
-- Turning a plain-English request into a query
+- Turning a plain-English business request into a query, such as a sales volume breakdown or an order overview for a manager
 - Explaining technical choices in plain English for a non-technical reader
 - Agreeing a design as a team
 
@@ -151,6 +154,9 @@ Looking back, a few queries don't fully answer the request as written. The `.sql
 - **`LIKE` matches part-words.** `'%New%'` finds Newcastle and Newport as well as cities that start with the word "New".
 - **Readable output.** The averages in Q15 and the densities in Q17 show long strings of decimal places. `ROUND` would make them easier to read.
 
+## 💼 Where this applies
+
+Audit and tax work often involves pulling samples and totals from a client's systems. Knowing that an inner join can drop records without warning is a completeness check: is anything missing from the data I'm testing? For analysts, SQL is the everyday route from a business question to an answer.
 
 ## 📁 Repository contents
 
@@ -160,3 +166,9 @@ Looking back, a few queries don't fully answer the request as written. The `.sql
 | `queries/northwind_business_queries.sql` | The 18 Northwind queries |
 | `queries/world_practical.sql` | The 18 World queries, with key results noted |
 | `images/world-results/` | A screenshot of each World query result |
+| `Create Northwind Tables on Supabase.docx` | Leep Talent's setup script that creates and fills the Northwind tables in Supabase |
+| `Create World DB on Supabase.txt` | Leep Talent's setup script that creates and fills the World tables in Supabase |
+| `Day 2 Supabase SQL Queries.txt` | SQL queries from the Day 2 class, supplied by Leep Talent |
+| `world database tasks solutions.docx` | Leep Talent's model answers for the World tasks, to compare with mine |
+
+The last four files are course materials from Leep Talent, not my own work. My queries are in the workbook and the `queries` folder.
