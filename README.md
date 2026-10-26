@@ -151,9 +151,6 @@ Looking back, a few queries don't fully answer the request as written. The `.sql
 - **`LIKE` matches part-words.** `'%New%'` finds Newcastle and Newport as well as cities that start with the word "New".
 - **Readable output.** The averages in Q15 and the densities in Q17 show long strings of decimal places. `ROUND` would make them easier to read.
 
-## 💼 Where this applies
-
-Audit and tax work often involves pulling samples and totals from a client's systems. Knowing that an inner join can drop records without warning is a completeness check: is anything missing from the data I'm testing? For analysts, SQL is the everyday route from a business question to an answer.
 
 ## 📁 Repository contents
 
