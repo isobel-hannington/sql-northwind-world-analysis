@@ -1,6 +1,8 @@
 # 🗄️ SQL: Northwind and World analysis
 
-36 SQL queries in PostgreSQL that answer business questions on two sample databases, plus a team database design and plain-English explanations of database types and joins.
+**36 PostgreSQL queries answering business questions on two sample databases, plus a team database design.**
+
+From Week 3 of my bootcamp. As a junior analyst, I answered 18 requests from colleagues at Northwind Traders and 18 questions about countries and cities in the World database, running every query in my own Supabase project. I also explained database types and joins in plain English, and helped design a database for a training company as a team exercise.
 
 ## 🔎 At a glance
 
@@ -12,48 +14,61 @@
 | **Type** | Individual queries; the SkillUp Academy database design was a team exercise |
 | **Files** | My completed Week 3 workbook, all 36 queries as `.sql` files, and a screenshot of each World result |
 
-## 🎯 Objective
+## 💡 Skills demonstrated
 
-- **Design:** SkillUp Academy, a small training company, keeps all its data in one spreadsheet, which causes duplicates and inconsistent records. Design a relational database to replace it, and advise which new data (website clicks, activity logs, learner feedback, uploaded documents) would suit a non-relational database.
-- **Northwind:** as a junior analyst at Northwind Traders, answer 18 requests from colleagues.
-- **World:** as a junior analyst at a research organisation, answer 18 questions about countries and cities.
+**✔️ Querying and filtering**
+- `SELECT`, `SELECT DISTINCT` and column aliases (`AS`)
+- Filtering with `WHERE`, `AND`, `OR`, `IN`, `BETWEEN`, `LIKE` and `IS NOT NULL` (Northwind Day 2, World)
+- Sorting and paging with `ORDER BY`, `LIMIT` and `OFFSET` (Northwind Day 2, World)
 
-## 🗂️ Data
+**✔️ Joining and summarising**
+- Inner joins across up to three tables (Northwind Day 3), including a join on a less obvious key: a country to its capital city (World Q16)
+- `COUNT`, `SUM` and `AVG`, grouped with `GROUP BY` (Northwind Day 3, World)
+- A calculated column: population divided by surface area (World Q17)
 
-Northwind is a sample sales database for a small food trading company, with customers, orders, order details, products, categories, suppliers and employees. World is a sample database of countries and cities, with population, surface area, continent, life expectancy and capital city. Both are teaching datasets, and the World figures are old, so the results describe the sample, not the world today.
+**✔️ Database design**
+- Primary keys, foreign keys and one-to-many relationships (SkillUp Academy, team exercise)
+- When to use a relational or a NoSQL database
+- Five join types explained in plain English and matched to six reporting needs
 
-I created both databases in my own Supabase project by running Leep Talent's setup scripts in the SQL Editor, then wrote and ran my queries against them. The setup scripts are included in this repository.
+**✔️ Working with business requests**
+- Turning a colleague's plain-English request into a query
+- Explaining technical choices for a non-technical reader
 
-## 🛠️ Approach
+## 📗 Exercises covered
 
-1. **Team design (SkillUp Academy).** In a breakout room, our team wrote a purpose statement for the database, chose four tables with a primary key each, and defined two one-to-many relationships.
-2. **Database types.** I explained how relational and NoSQL databases store data, and picked user activity logs and learner feedback as the data that suits a non-relational database, because its structure varies.
-3. **Joins.** I explained five join types in plain English and chose a join for each of six SkillUp reporting needs.
-4. **Northwind, Day 2.** Ten queries filtering and sorting single tables with `WHERE`, `IN`, `BETWEEN`, `DISTINCT` and `ORDER BY`.
-5. **Northwind, Day 3.** Eight queries joining two or three tables, including counts and totals with `GROUP BY`.
-6. **World.** 18 queries using `LIKE`, `LIMIT`, `OFFSET`, `COUNT`, `AVG`, a calculated column and joins, with a screenshot of each result.
+| Task | What I did |
+|---|---|
+| Team design | SkillUp Academy, a small training company, kept all its data in one spreadsheet. Our team chose four tables with a primary key each and two one-to-many relationships to replace it. |
+| Database types | Explained how relational and NoSQL databases store data, and picked activity logs and learner feedback as data that suits a non-relational database, because its structure varies |
+| Joins | Chose a join type for each of six SkillUp reporting needs |
+| Northwind, Day 2 | Ten queries filtering and sorting single tables |
+| Northwind, Day 3 | Eight queries joining two or three tables, including counts and totals |
+| World | 18 queries, with a screenshot of each result |
 
-## 🧩 The SkillUp Academy design (team exercise)
+Both databases are teaching datasets, created in Supabase with Leep Talent's setup scripts. The World figures are old, so the results describe the sample, not the world today.
+
+### The SkillUp Academy design (team exercise)
 
 | Table | Primary key | Other columns |
 |---|---|---|
 | Learners | LearnerID | FirstName, LastName, Email, PhoneNumber, DateOfBirth |
 | Trainers | TrainerID | FirstName, LastName, Email |
 | Courses | CourseID | CourseName, StartDate, DurationWeeks, Price, TrainerID (foreign key) |
-| Enrolments | EnrolmentID | LearnerID (foreign key), CourseID (foreign key), EnrolmentDate, Status (Active, Completed or Withdrawn) |
+| Enrolments | EnrolmentID | LearnerID (foreign key), CourseID (foreign key), EnrolmentDate, Status |
 
-One learner can have many enrolments, but each enrolment belongs to one learner, so staff can see every course a learner is taking without repeating their details. One trainer can teach many courses, and each course is led by one trainer.
+One learner can have many enrolments, so staff can see every course a learner takes without repeating their details.
 
-## 🔗 Joins matched to reporting needs
+### Joins matched to reporting needs
 
-| Reporting need | Join I chose | Why |
-|---|---|---|
-| Only learners who are enrolled on a course | Inner | Returns only learners with a matching enrolment |
-| All courses, including those with no enrolments | Left | Keeps every course; learner columns show NULL where nobody has enrolled |
-| All learners and all courses, linked or not | Full outer | Keeps learners with no course and courses with no learners |
-| Every combination of learners and courses | Cross | Pairs every learner with every course |
-| Learners compared with other learners | Inner | Matches learners on the same course or city |
-| Enrolments even where related data is missing | Left | Keeps every enrolment and fills gaps with NULL |
+| Reporting need | Join I chose |
+|---|---|
+| Only learners who are enrolled on a course | Inner |
+| All courses, including those with no enrolments | Left |
+| All learners and all courses, linked or not | Full outer |
+| Every combination of learners and courses | Cross |
+| Learners compared with other learners | Inner |
+| Enrolments even where related data is missing | Left |
 
 ## 🧾 Northwind query highlights
 
@@ -66,18 +81,7 @@ JOIN categories AS c ON p.categoryid = c.categoryid
 JOIN suppliers  AS s ON s.supplierid = p.supplierid;
 ```
 
-The products table holds a category ID and a supplier ID, so two joins put the product, category and supplier names side by side in one row.
-
-**Number of products in each category (Day 3, Q7)**
-
-```sql
-SELECT COUNT(productname) AS numberofproducts, categoryname
-FROM products AS p
-JOIN categories AS c ON p.categoryid = c.categoryid
-GROUP BY categoryname;
-```
-
-`GROUP BY` collapses the products into one row per category, and `COUNT` gives the number in each.
+Two joins put the product, category and supplier names side by side in one row.
 
 **Total quantity ordered for each product (Day 3, Q8)**
 
@@ -90,23 +94,11 @@ GROUP BY p.productid, p.productname, p.price;
 
 The order details table has one row for each product on each order, so summing the quantity by product gives the total units ordered.
 
-## 🌍 World queries and results
+## 📈 World results
 
-All figures come from the sample database. Three examples:
-
-**How many cities does the USA have? (Q1)** A `COUNT` with a `WHERE` filter on the country code returns 274.
-
-![Number of US cities](images/world-results/q01-us-city-count.png)
-
-**Capital cities ranked by population (Q16)** The country table stores each capital as a city ID, so the join runs from `country.capital` to `city.id`. Seoul comes first (9,981,619), then Jakarta and Ciudad de México.
+**Capital cities ranked by population (Q16).** The country table stores each capital as a city ID, so the join runs from `country.capital` to `city.id`. Seoul comes first (9,981,619), then Jakarta and Ciudad de México.
 
 ![Capital cities by population](images/world-results/q16-capital-cities-by-population.png)
-
-**The least densely populated countries (Q17)** Density is a calculated column: population divided by surface area. I excluded countries with a population of 0 so uninhabited territories don't fill the list. Greenland comes first, at about 0.03 people per square kilometre.
-
-![Least densely populated countries](images/world-results/q17-lowest-density.png)
-
-Every World query, with its result and screenshot:
 
 | Q | Question | Result | Screenshot |
 |---|---|---|---|
@@ -126,33 +118,29 @@ Every World query, with its result and screenshot:
 | 14 | Cities in Europe | 841 cities | [View](images/world-results/q14-cities-in-europe.png) |
 | 15 | Average city population by country | Singapore, 4,017,733 (its only listed city is Singapore) | [View](images/world-results/q15-avg-city-population.png) |
 | 16 | Capital cities by population | Seoul, then Jakarta and Ciudad de México | [View](images/world-results/q16-capital-cities-by-population.png) |
-| 17 | Least densely populated countries | Greenland, then Svalbard and Jan Mayen, and the Falkland Islands | [View](images/world-results/q17-lowest-density.png) |
+| 17 | Least densely populated countries | Greenland (about 0.03 people per square kilometre), then Svalbard and Jan Mayen | [View](images/world-results/q17-lowest-density.png) |
 | 18 | Cities ranked 31st to 40th | Starts with Shenyang, Kanton (Guangzhou) and Singapore | [View](images/world-results/q18-cities-ranked-31-to-40.png) |
 
-## 💡 Skills used
+## 🎓 Key learning outcomes
 
-**Technical**
-- Retrieving data with `SELECT`, `SELECT DISTINCT` and column aliases (`AS`)
-- Filtering with `WHERE`, `AND`, `OR`, `IN`, `BETWEEN`, `LIKE` and `IS NOT NULL`
-- Inner joins across up to three tables, including a join on a less obvious key (a country to its capital city)
-- Aggregates with `COUNT`, `SUM` and `AVG`, grouped with `GROUP BY`
-- Sorting and paging with `ORDER BY`, `LIMIT` and `OFFSET`
-- Relational design: primary keys, foreign keys and one-to-many relationships
+- **Find the key that links two tables.** A country's capital is stored as a city ID, so the join has to run from `country.capital` to `city.id`.
+- **Filter out rows that distort a ranking.** I excluded countries with a population of 0 so uninhabited territories didn't fill the density list.
+- **Good design removes repetition.** Splitting learners and enrolments into separate tables means each learner's details are stored once.
 
-**Transferable**
-- Turning a plain-English business request into a query, such as a sales volume breakdown or an order overview for a manager
-- Explaining technical choices in plain English for a non-technical reader
-- Agreeing a design as a team
+## 🧠 What I'd change
 
-## 🧠 Challenges and what I'd change
+My workbook and `.sql` files show the queries as I submitted them.
 
-Looking back, a few queries don't fully answer the request as written. The `.sql` files and my workbook show them as I submitted them.
-
-- **Read the whole request.** Day 3 Q6 asks for the 1996 orders "and their customers", but my query returns the orders table on its own, which shows customer IDs rather than names. A join to customers would complete it. Similarly, Q4 asks for one employee name, and mine returns the first name, last name and employee ID as separate columns.
-- **Inner joins can drop rows.** Q7 and Q8 ask for "all categories" and "all products". An inner join leaves out any category with no products, or any product that has never been ordered. Starting from that table with a `LEFT JOIN` keeps them.
-- **One answer, not a list.** World Q2 asks for one country. My query lists every country from highest to lowest, so the answer is the top row. `ORDER BY` with `LIMIT 1` would return Andorra alone, and the `GROUP BY` isn't needed because there's no aggregate.
+- **Read the whole request.** Day 3 Q6 asks for the 1996 orders "and their customers", but my query shows customer IDs rather than names. A join to customers would complete it.
+- **Inner joins can drop rows.** Q7 and Q8 ask for "all categories" and "all products". An inner join leaves out any category with no products, or any product never ordered. A `LEFT JOIN` keeps them.
+- **One answer, not a list.** World Q2 asks for one country. `ORDER BY` with `LIMIT 1` would return Andorra alone.
 - **`LIKE` matches part-words.** `'%New%'` finds Newcastle and Newport as well as cities that start with the word "New".
-- **Readable output.** The averages in Q15 and the densities in Q17 show long strings of decimal places. `ROUND` would make them easier to read.
+- **Round long decimals.** `ROUND` would make the averages in Q15 and the densities in Q17 easier to read.
+
+## 🛠️ Tools and technologies
+
+- **PostgreSQL:** every query
+- **Supabase:** hosting both databases and running queries in the SQL Editor
 
 ## 📁 Repository contents
 
@@ -167,4 +155,4 @@ Looking back, a few queries don't fully answer the request as written. The `.sql
 | `Day 2 Supabase SQL Queries.txt` | SQL queries from the Day 2 class, supplied by Leep Talent |
 | `world database tasks solutions.docx` | Leep Talent's model answers for the World tasks, to compare with mine |
 
-The last four files are course materials from Leep Talent, not my own work. My queries are in the workbook and the `queries` folder.
+The last four files are course materials from Leep Talent, not my own work.
